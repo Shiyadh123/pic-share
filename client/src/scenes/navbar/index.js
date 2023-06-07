@@ -28,7 +28,7 @@ import {
   setPosts,
   setfilteredPosts,
 } from "../../state/index";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import FlexBetween from "../../components/flexBetween";
 
 const Navbar = () => {
@@ -111,8 +111,12 @@ const Navbar = () => {
               <LightMode sx={{ color: dark, fontSize: "25px" }} />
             )}
           </IconButton>
-          <IconButton>
-            {" "}
+          <IconButton
+            component={Link}
+            to="https://github.com/Shiyadh123/pic-share"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             <Help sx={{ fontSize: "25px" }} />
           </IconButton>
           <FormControl variant="standard" value={fullName}>

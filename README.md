@@ -41,3 +41,9 @@ If you would like to contribute to this project, please follow these steps:
 4. Push to the branch: `git push origin my-feature`
 5. Submit a pull request
 
+## License
+
+This project is licensed under the [MIT License](LICENSE).
+
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+

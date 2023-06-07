@@ -191,7 +191,14 @@ const Navbar = () => {
                 <LightMode sx={{ color: dark, fontSize: "25px" }} />
               )}
             </IconButton>
-            <Help sx={{ fontSize: "25px" }} />
+            <IconButton
+              component={Link}
+              to="https://github.com/Shiyadh123/pic-share"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <Help sx={{ fontSize: "25px" }} />
+            </IconButton>
             <FormControl variant="standard" value={fullName}>
               <Select
                 value={fullName}

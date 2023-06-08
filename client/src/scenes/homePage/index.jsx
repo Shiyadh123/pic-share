@@ -6,6 +6,7 @@ import UserWidget from "../widgets/UserWidget";
 import MyPostWidget from "../widgets/MyPostWidget";
 import PostsWidget from "../widgets/PostsWidgets";
 import FriendListWidget from "../widgets/FrindsListWidget";
+import UserLoader from "../../components/UserLoader";
 
 const HomePage = () => {
   const isNonMobileScreens = useMediaQuery("(min-width:1000px)");
@@ -21,6 +22,7 @@ const HomePage = () => {
         justifyContent="space-between"
       >
         <Box flexBasis={isNonMobileScreens ? "26%" : undefined}>
+          {/* <UserLoader></UserLoader> */}
           <UserWidget
             userId={_id}
             picturePath={picturePath}

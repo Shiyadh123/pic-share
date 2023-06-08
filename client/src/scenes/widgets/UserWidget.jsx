@@ -13,9 +13,11 @@ import WidgetWrapper from "../../components/WidgetWrapper";
 import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import UserLoader from "../../components/UserLoader";
 
 const UserWidget = ({ userId, picturePath, isProfile }) => {
   const [user, setUser] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
   const { palette } = useTheme();
   const navigate = useNavigate();
   const token = useSelector((state) => state.token);
@@ -24,6 +26,7 @@ const UserWidget = ({ userId, picturePath, isProfile }) => {
   const main = palette.neutral.main;
 
   const getUser = async () => {
+    setIsLoading(true);
     try {
       const response = await fetch(
         `${process.env.REACT_APP_API_KEY}/users/${userId}`,
@@ -33,6 +36,7 @@ const UserWidget = ({ userId, picturePath, isProfile }) => {
         }
       );
       const data = await response.json();
+      setIsLoading(false);
       setUser(data);
     } catch (error) {
       console.log("err", error);
@@ -50,7 +54,9 @@ const UserWidget = ({ userId, picturePath, isProfile }) => {
   }
   const { firstName, lastName, location, interests, email, friends } = user;
 
-  return (
+  return isLoading ? (
+    <UserLoader></UserLoader>
+  ) : (
     <WidgetWrapper>
       {/* FIRST ROW */}
       <FlexBetween

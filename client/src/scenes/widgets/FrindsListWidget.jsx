@@ -1,12 +1,14 @@
 import { Box, Divider, Typography, useTheme } from "@mui/material";
 import Friend from "../../components/Friend";
 import WidgetWrapper from "../../components/WidgetWrapper";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setFriends, setUserFriends } from "../../state";
+import FriendLoader from "../../components/FrindLoader";
 
 const FriendListWidget = ({ userId, isProfile }) => {
   const dispatch = useDispatch();
+  const [isLoading, setIsLoading] = useState(false);
   const { palette } = useTheme();
   const token = useSelector((state) => state.token);
   const friends = useSelector((state) =>
@@ -14,6 +16,7 @@ const FriendListWidget = ({ userId, isProfile }) => {
   );
 
   const getFriends = async () => {
+    setIsLoading(true);
     const response = await fetch(
       `${process.env.REACT_APP_API_KEY}/users/${userId}/friends`,
       {
@@ -22,6 +25,7 @@ const FriendListWidget = ({ userId, isProfile }) => {
       }
     );
     const data = await response.json();
+    setIsLoading(false);
     if (isProfile) {
       dispatch(setFriends({ friends: data }));
     } else {
@@ -45,7 +49,9 @@ const FriendListWidget = ({ userId, isProfile }) => {
         <Divider></Divider>
       </Typography>
       <Box display="flex" flexDirection="column" gap="1.5rem">
-        {friends && friends.length === 0 ? (
+        {isLoading ? (
+          [1, 2, 3, 4].map(() => <FriendLoader></FriendLoader>)
+        ) : friends && friends.length === 0 ? (
           <Typography variant="h5" ml="10px">
             {isProfile ? "No Friends" : "Start adding friends from your feed"}
           </Typography>

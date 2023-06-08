@@ -1,24 +1,29 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setPosts } from "../../state";
 import PostWidget from "./PostWidget";
 import { Typography } from "@mui/material";
+import PostLoader from "../../components/PostLoader";
 
 const PostsWidget = ({ userId, isProfile = false }) => {
   const dispatch = useDispatch();
+  const [isLoading, setIsLoading] = useState(false);
   const posts = useSelector((state) => state.filteredPosts);
   const token = useSelector((state) => state.token);
 
   const getPosts = async () => {
+    setIsLoading(true);
     const response = await fetch(process.env.REACT_APP_API_KEY + "/posts", {
       method: "GET",
       headers: { Authorization: `Bearer ${token}` },
     });
     const data = await response.json();
+    setIsLoading(false);
     dispatch(setPosts({ posts: data }));
   };
 
   const getUserPosts = async () => {
+    setIsLoading(true);
     const response = await fetch(
       `${process.env.REACT_APP_API_KEY}/posts/${userId}/posts`,
       {
@@ -27,6 +32,7 @@ const PostsWidget = ({ userId, isProfile = false }) => {
       }
     );
     const data = await response.json();
+    setIsLoading(false);
     dispatch(setPosts({ posts: data }));
   };
   useEffect(() => {
@@ -41,7 +47,9 @@ const PostsWidget = ({ userId, isProfile = false }) => {
 
   return (
     <>
-      {posts.length === 0 ? (
+      {isLoading ? (
+        <PostLoader></PostLoader>
+      ) : posts.length === 0 ? (
         <Typography variant="h5" ml="10px">
           No posts to show
         </Typography>

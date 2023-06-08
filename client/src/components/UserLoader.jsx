@@ -9,9 +9,9 @@ const UserLoader = (props) => {
   return (
     <ContentLoader
       speed={2}
-      width={150}
+      width={200}
       height={300}
-      viewBox="0 0 150 300"
+      viewBox="0 0 200 300"
       backgroundColor={main}
       foregroundColor={dark}
       {...props}

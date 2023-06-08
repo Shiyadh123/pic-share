@@ -20,6 +20,7 @@ import {
   Menu,
   Close,
   Home,
+  AccountBox,
 } from "@mui/icons-material";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -183,6 +184,15 @@ const Navbar = () => {
             alignItems="center"
             gap="3rem"
           >
+            <IconButton
+              sx={{ fontSize: "25px" }}
+              onClick={() => {
+                navigate(`/profile/${user._id}`);
+                navigate(0);
+              }}
+            >
+              <AccountBox sx={{ fontSize: "25px" }}></AccountBox>
+            </IconButton>
             <IconButton
               onClick={() => dispatch(setMode())}
               sx={{ fontSize: "25px" }}

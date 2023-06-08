@@ -6,7 +6,6 @@ import UserWidget from "../widgets/UserWidget";
 import MyPostWidget from "../widgets/MyPostWidget";
 import PostsWidget from "../widgets/PostsWidgets";
 import FriendListWidget from "../widgets/FrindsListWidget";
-import UserLoader from "../../components/UserLoader";
 
 const HomePage = () => {
   const isNonMobileScreens = useMediaQuery("(min-width:1000px)");
@@ -21,14 +20,15 @@ const HomePage = () => {
         gap="0.5rem"
         justifyContent="space-between"
       >
-        <Box flexBasis={isNonMobileScreens ? "26%" : undefined}>
-          {/* <UserLoader></UserLoader> */}
-          <UserWidget
-            userId={_id}
-            picturePath={picturePath}
-            isProfile={false}
-          />
-        </Box>
+        {isNonMobileScreens && (
+          <Box flexBasis={isNonMobileScreens ? "26%" : undefined}>
+            <UserWidget
+              userId={_id}
+              picturePath={picturePath}
+              isProfile={false}
+            />
+          </Box>
+        )}
         <Box
           flexBasis={isNonMobileScreens ? "42%" : undefined}
           mt={isNonMobileScreens ? undefined : "1rem"}
@@ -36,12 +36,11 @@ const HomePage = () => {
           <MyPostWidget picturePath={picturePath} />
           <PostsWidget userId={_id} isProfile={false}></PostsWidget>
         </Box>
-        {isNonMobileScreens && (
-          <Box flexBasis="26%">
-            <Box m="0.1rem 0" />
-            <FriendListWidget userId={_id} isProfile={false} />
-          </Box>
-        )}
+
+        <Box flexBasis="26%">
+          <Box m="0.1rem 0" />
+          <FriendListWidget userId={_id} isProfile={false} />
+        </Box>
       </Box>
     </Box>
   );

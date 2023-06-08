@@ -48,6 +48,7 @@ const initialValuesLogin = {
 
 const Form = () => {
   const [pageType, setPageType] = useState("login");
+  const [isLoading, setIsLoading] = useState(false);
   const { palette } = useTheme();
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -56,6 +57,7 @@ const Form = () => {
   const isRegister = pageType === "register";
 
   const register = async (values, onSubmitProps) => {
+    setIsLoading(true);
     const formData = new FormData();
     for (let value in values) {
       formData.append(value, values[value]);
@@ -71,13 +73,14 @@ const Form = () => {
     );
     const savedUser = await savedUserResponse.json();
     onSubmitProps.resetForm();
-
+    setIsLoading(false);
     if (savedUser) {
       setPageType("login");
     }
   };
 
   const login = async (values, onSubmitProps) => {
+    setIsLoading(true);
     const loggedInResponse = await fetch(
       `${process.env.REACT_APP_API_KEY}/auth/login`,
       {
@@ -95,6 +98,7 @@ const Form = () => {
           token: loggedIn.token,
         })
       );
+      setIsLoading(false);
       navigate("/home");
     }
   };
@@ -237,6 +241,7 @@ const Form = () => {
           {/* BUTTONS */}
           <Box>
             <Button
+              disabled={isLoading}
               fullWidth
               type="submit"
               sx={{
@@ -247,7 +252,7 @@ const Form = () => {
                 "&:hover": { color: palette.primary.main },
               }}
             >
-              {isLogin ? "LOGIN" : "REGISTER"}
+              {isLoading ? "Submitting..." : isLogin ? "LOGIN" : "REGISTER"}
             </Button>
             <Typography
               onClick={() => {

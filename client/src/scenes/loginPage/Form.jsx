@@ -252,7 +252,7 @@ const Form = () => {
               fullWidth
               type="submit"
               sx={{
-                m: "2rem 0",
+                m: "2rem 0 0 0",
                 p: "1rem",
                 backgroundColor: palette.primary.main,
                 color: palette.background.alt,
@@ -269,7 +269,12 @@ const Form = () => {
                 "REGISTER"
               )}
             </Button>
-            <ErrorMessage name="invalidCredential" component="div" />
+            {isLoading && (
+              <p color="red">
+                Please bear with us, Our backend service requires a short
+                spin-up time of few seconds.
+              </p>
+            )}
             <Typography
               onClick={() => {
                 setPageType(isLogin ? "register" : "login");
@@ -282,6 +287,7 @@ const Form = () => {
                   cursor: "pointer",
                   color: palette.primary.light,
                 },
+                mt: "15px",
               }}
             >
               {isLogin

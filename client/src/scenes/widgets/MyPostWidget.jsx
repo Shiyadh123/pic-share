@@ -62,7 +62,7 @@ const MyPostWidget = ({ picturePath }) => {
       <FlexBetween gap="1rem">
         <UserImage image={picturePath} />
         <InputBase
-          placeholder="What's on your mind..."
+          placeholder="Add a post..."
           onChange={(e) => setPost(e.target.value)}
           value={post}
           sx={{

@@ -71,7 +71,11 @@ const Navbar = () => {
       <FlexBetween gap="1.75rem">
         <Typography
           fontWeight="bold"
-          fontSize="clamp(1rem, 2rem, 2.25rem)"
+          fontSize={
+            isNonMobileScreens
+              ? "clamp(1rem, 2rem, 2.25rem)"
+              : "clamp(1rem, 1.5rem, 1.5rem)"
+          }
           color="primary"
           onClick={() => navigate("/home")}
           sx={{
@@ -83,19 +87,17 @@ const Navbar = () => {
         >
           PicShare
         </Typography>
-        {
-          <FlexBetween
-            backgroundColor={neutralLight}
-            borderRadius="9px"
-            gap="3rem"
-            padding="0.1rem 1.5rem"
-          >
-            <InputBase onChange={inputHandler} placeholder="Search..." />
-            <IconButton>
-              <Search />
-            </IconButton>
-          </FlexBetween>
-        }
+        <FlexBetween
+          backgroundColor={neutralLight}
+          borderRadius="9px"
+          gap="3rem"
+          padding="0.1rem 0.5rem"
+        >
+          <InputBase onChange={inputHandler} placeholder="Search..." />
+          <IconButton>
+            <Search />
+          </IconButton>
+        </FlexBetween>
       </FlexBetween>
 
       {/* DESKTOP NAV */}

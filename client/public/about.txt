@@ -1,0 +1,6 @@
+This favicon was generated using the following font:
+
+- Font Title: Geologica
+- Font Author: Copyright 2020 The Geologica Project Authors (https://github.com/googlefonts/geologica)
+- Font Source: http://fonts.gstatic.com/s/geologica/v1/oY1o8evIr7j9P3TN9YwNAdyjzUyDKkKdAGOJh1UlCDUIhAIdhCZOn1fLsig7jfvCCPHZckU8H3G11_z-_OZqDx_rQ-MYAXWnqFs.ttf
+- Font License: SIL Open Font License, 1.1 (http://scripts.sil.org/OFL))

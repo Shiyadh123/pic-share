@@ -8,7 +8,7 @@ import {
   useTheme,
 } from "@mui/material";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
-import { Formik, Field, ErrorMessage } from "formik";
+import { Formik } from "formik";
 import * as yup from "yup";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
@@ -90,13 +90,11 @@ const Form = () => {
         body: JSON.stringify(values),
       }
     );
-    console.log(loggedInResponse);
     if (!loggedInResponse.ok) {
       window.alert("Invalid credentials");
       setIsLoading(false);
     }
     const loggedIn = await loggedInResponse.json();
-    console.log(loggedIn);
     onSubmitProps.resetForm();
     if (loggedIn) {
       dispatch(

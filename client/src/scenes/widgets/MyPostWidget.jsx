@@ -30,6 +30,7 @@ const MyPostWidget = ({ picturePath }) => {
   const [isImage, setIsImage] = useState(false);
   const [image, setImage] = useState(null);
   const [post, setPost] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const { palette } = useTheme();
   const { _id } = useSelector((state) => state.user);
   const token = useSelector((state) => state.token);
@@ -38,6 +39,7 @@ const MyPostWidget = ({ picturePath }) => {
   const medium = palette.neutral.medium;
 
   const handlePost = async () => {
+    setIsSubmitting(true);
     const formData = new FormData();
     formData.append("userId", _id);
     formData.append("description", post);
@@ -52,6 +54,7 @@ const MyPostWidget = ({ picturePath }) => {
       body: formData,
     });
     const posts = await response.json();
+    setIsSubmitting(false);
     dispatch(setPosts({ posts }));
     setImage(null);
     setPost("");
@@ -161,7 +164,7 @@ const MyPostWidget = ({ picturePath }) => {
         )}
 
         <Button
-          disabled={!post}
+          disabled={!post || isSubmitting}
           onClick={handlePost}
           sx={{
             color: palette.background.alt,
@@ -169,7 +172,9 @@ const MyPostWidget = ({ picturePath }) => {
             borderRadius: "3rem",
           }}
         >
-          <Typography color="black">POST</Typography>
+          <Typography color="black">
+            {isSubmitting ? "Posting" : "POST"}
+          </Typography>
         </Button>
       </FlexBetween>
     </WidgetWrapper>

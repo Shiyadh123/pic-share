@@ -5,7 +5,7 @@ import {
   ShareOutlined,
   DeleteOutlineOutlined,
 } from "@mui/icons-material";
-import { Box, Divider, IconButton, Typography, useTheme } from "@mui/material";
+import { IconButton, Typography, useTheme } from "@mui/material";
 import FlexBetween from "../../components/flexBetween";
 import Friend from "../../components/Friend";
 import WidgetWrapper from "../../components/WidgetWrapper";
@@ -64,6 +64,8 @@ const PostWidget = ({
     const deletedPostId = await response.json();
     dispatch(setPostAfterDelete({ deletedPostId }));
   };
+
+  console.log(description, picturePath);
 
   return (
     <WidgetWrapper m="0.5rem 0">

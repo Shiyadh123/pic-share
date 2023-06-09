@@ -36,9 +36,7 @@ app.use("/assets", express.static(path.join(__dirname, "public/assets"))); //mak
 
 // File storage
 const storage = multer.diskStorage({
-  destination: function (req, res, cb) {
-    cb(null, path.join(__dirname, "public/assets")); //storage location
-  },
+  destination: path.join(__dirname, "public/assets"),
   filename: function (req, file, cb) {
     cb(null, file.originalname); //same file name as uploaded form
   },

@@ -39,7 +39,6 @@ const MyPostWidget = ({ picturePath }) => {
   const medium = palette.neutral.medium;
 
   const handlePost = async () => {
-    setIsSubmitting(true);
     const formData = new FormData();
     formData.append("userId", _id);
     formData.append("description", post);
@@ -47,13 +46,18 @@ const MyPostWidget = ({ picturePath }) => {
       formData.append("picture", image);
       formData.append("picturePath", image.name);
     }
-
+    setIsSubmitting(true);
     const response = await fetch(`${process.env.REACT_APP_API_KEY}/posts`, {
       method: "POST",
       headers: { Authorization: `Bearer ${token}` },
       body: formData,
     });
+    if (!response.ok) {
+      setIsSubmitting(false);
+      return;
+    }
     const posts = await response.json();
+    console.log(posts);
     setIsSubmitting(false);
     dispatch(setPosts({ posts }));
     setImage(null);

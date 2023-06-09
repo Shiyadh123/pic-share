@@ -34,7 +34,7 @@ const PostWidget = ({
   const primary = palette.primary.main;
 
   const patchLike = async () => {
-    console.log(process.env);
+    // console.log(process.env);
     const response = await fetch(
       `${process.env.REACT_APP_API_KEY}/posts/${postId}/like`,
       {
@@ -65,7 +65,7 @@ const PostWidget = ({
     dispatch(setPostAfterDelete({ deletedPostId }));
   };
 
-  console.log(description, picturePath);
+  // console.log(description, picturePath);
 
   return (
     <WidgetWrapper m="0.5rem 0">

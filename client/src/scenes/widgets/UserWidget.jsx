@@ -15,7 +15,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import UserLoader from "../../components/UserLoader";
 
-const UserWidget = ({ userId, picturePath, isProfile }) => {
+const UserWidget = ({ userId, isProfile }) => {
   const [user, setUser] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const { palette } = useTheme();
@@ -52,7 +52,8 @@ const UserWidget = ({ userId, picturePath, isProfile }) => {
   if (!user) {
     return null;
   }
-  const { firstName, lastName, location, interests, email, friends } = user;
+  const { firstName, lastName, location, interests, email, friends, image } =
+    user;
 
   return isLoading ? (
     <UserLoader></UserLoader>
@@ -65,7 +66,7 @@ const UserWidget = ({ userId, picturePath, isProfile }) => {
         onClick={() => navigate(`/profile/${userId}`)}
       >
         <FlexBetween gap="1rem">
-          <UserImage image={picturePath} />
+          <UserImage image={image} />
           <Box>
             <Typography
               variant="h4"

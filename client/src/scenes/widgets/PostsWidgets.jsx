@@ -48,7 +48,10 @@ const PostsWidget = ({ userId, isProfile = false }) => {
   return (
     <>
       {isLoading ? (
-        <PostLoader></PostLoader>
+        <>
+          {" "}
+          <PostLoader></PostLoader> <PostLoader></PostLoader>
+        </>
       ) : posts.length === 0 ? (
         <Typography variant="h5" ml="10px">
           No posts to show
@@ -62,10 +65,10 @@ const PostsWidget = ({ userId, isProfile = false }) => {
             lastName,
             description,
             location,
-            picturePath,
-            userPicturePath,
             likes,
             comments,
+            image,
+            userImage,
           }) => (
             <PostWidget
               key={_id}
@@ -75,10 +78,10 @@ const PostsWidget = ({ userId, isProfile = false }) => {
               name={`${firstName} ${lastName}`}
               description={description}
               location={location}
-              picturePath={picturePath}
-              userPicturePath={userPicturePath}
               likes={likes}
               comments={comments}
+              image={image}
+              userImage={userImage}
             />
           )
         )

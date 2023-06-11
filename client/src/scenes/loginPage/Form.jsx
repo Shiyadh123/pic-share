@@ -16,6 +16,7 @@ import { setLogin } from "../../state";
 import Dropzone from "react-dropzone";
 import FlexBetween from "../../components/flexBetween";
 import Spinner from "../../components/Spinner";
+import Compressor from "compressorjs";
 
 const registerSchema = yup.object().shape({
   firstName: yup.string().required("required"),
@@ -57,13 +58,43 @@ const Form = () => {
   const isLogin = pageType === "login";
   const isRegister = pageType === "register";
 
+  function convertToBase64(file) {
+    return new Promise((resolve, reject) => {
+      const fileReader = new FileReader();
+      fileReader.readAsDataURL(file);
+      fileReader.onload = () => {
+        resolve(fileReader.result);
+      };
+      fileReader.onerror = (error) => {
+        reject(error);
+      };
+    });
+  }
+  function compressFun(image) {
+    return new Promise((resolve, reject) => {
+      const size = image.size / 1024;
+      let qly = 400 / size;
+      if (qly > 1) qly = 1;
+      new Compressor(image, {
+        quality: qly,
+        success: (compressedResult) => {
+          resolve(compressedResult);
+        },
+      });
+    });
+  }
+
   const register = async (values, onSubmitProps) => {
     setIsLoading(true);
     const formData = new FormData();
     for (let value in values) {
+      if (value === "picture") continue;
       formData.append(value, values[value]);
     }
-    formData.append("picturePath", values.picture.name);
+    let compressedImg = await compressFun(values.picture);
+    const base64String = await convertToBase64(compressedImg);
+    formData.append("base64String", base64String);
+    // formData.append("picturePath", values.picture.name);
 
     const savedUserResponse = await fetch(
       `${process.env.REACT_APP_API_KEY}/auth/register`,
@@ -73,6 +104,7 @@ const Form = () => {
       }
     );
     const savedUser = await savedUserResponse.json();
+    console.log(savedUser);
     onSubmitProps.resetForm();
     setIsLoading(false);
     if (savedUser) {

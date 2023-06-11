@@ -25,16 +25,16 @@ const userSchema = new mongoose.Schema(
       required: true,
       min: 5,
     },
-    picturePath: {
-      type: String,
-      default: "",
-    },
     friends: {
       type: Array,
       default: [],
     },
     location: String,
     interests: String,
+    image: {
+      type: String,
+      default: "",
+    },
   },
   {
     timestamps: true,

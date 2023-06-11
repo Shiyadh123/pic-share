@@ -18,10 +18,10 @@ const PostWidget = ({
   name,
   description,
   location,
-  picturePath,
-  userPicturePath,
   likes,
   isProfile,
+  image,
+  userImage,
 }) => {
   const dispatch = useDispatch();
   const token = useSelector((state) => state.token);
@@ -34,7 +34,6 @@ const PostWidget = ({
   const primary = palette.primary.main;
 
   const patchLike = async () => {
-    // console.log(process.env);
     const response = await fetch(
       `${process.env.REACT_APP_API_KEY}/posts/${postId}/like`,
       {
@@ -65,27 +64,25 @@ const PostWidget = ({
     dispatch(setPostAfterDelete({ deletedPostId }));
   };
 
-  // console.log(description, picturePath);
-
   return (
     <WidgetWrapper m="0.5rem 0">
       <Friend
         friendId={postUserId}
         name={name}
         subtitle={location}
-        userPicturePath={userPicturePath}
         isProfile={isProfile}
+        image={userImage}
       />
       <Typography color={main} sx={{ mt: "1rem" }}>
         {description}
       </Typography>
-      {picturePath && (
+      {image && (
         <img
           width="100%"
           height="auto"
           alt="post"
           style={{ borderRadius: "0.75rem", marginTop: "0.75rem" }}
-          src={`${process.env.REACT_APP_API_KEY}/assets/${picturePath}`}
+          src={image}
         />
       )}
       <FlexBetween mt="0.25rem">

@@ -3,8 +3,9 @@ import User from "../models/user.js";
 
 // create
 export const createPost = async (req, res) => {
+  console.log("beg");
   try {
-    const { userId, description, picturePath } = req.body;
+    const { userId, description, base64String } = req.body;
     const user = await User.findById(userId);
     const newPost = new Post({
       userId,
@@ -12,12 +13,13 @@ export const createPost = async (req, res) => {
       lastName: user.lastName,
       location: user.location,
       description,
-      userPicturePath: user.picturePath,
-      picturePath,
       likes: {},
       comments: [],
+      image: base64String,
+      userImage: user.image,
     });
     await newPost.save();
+    console.log("end");
     const posts = await Post.find();
     res.status(201).json(posts);
   } catch (error) {

@@ -41,7 +41,10 @@ const storage = multer.diskStorage({
     cb(null, file.originalname); //same file name as uploaded form
   },
 });
-const upload = multer({ storage: storage });
+const upload = multer({
+  storage: storage,
+  limits: { fieldSize: 25 * 1024 * 1024 },
+});
 
 // Routes with files
 app.post("/auth/register", upload.single("picture"), register); //middleware in mid to upload file (req.file==picture)

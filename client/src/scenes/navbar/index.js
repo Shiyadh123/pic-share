@@ -50,7 +50,6 @@ const Navbar = () => {
   const posts = useSelector((state) => state.posts);
 
   const inputHandler = (e) => {
-    console.log(e.target.value);
     const filteredPosts = posts.filter((post) => {
       return (
         post.description

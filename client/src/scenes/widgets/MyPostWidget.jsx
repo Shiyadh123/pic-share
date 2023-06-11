@@ -24,11 +24,13 @@ import WidgetWrapper from "../../components/WidgetWrapper";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setPosts } from "../../state";
+import Compressor from "compressorjs";
 
-const MyPostWidget = ({ picturePath }) => {
+const MyPostWidget = ({ userImage }) => {
   const dispatch = useDispatch();
   const [isImage, setIsImage] = useState(false);
   const [image, setImage] = useState(null);
+
   const [post, setPost] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { palette } = useTheme();
@@ -38,13 +40,39 @@ const MyPostWidget = ({ picturePath }) => {
   const mediumMain = palette.neutral.mediumMain;
   const medium = palette.neutral.medium;
 
+  function convertToBase64(file) {
+    return new Promise((resolve, reject) => {
+      const fileReader = new FileReader();
+      fileReader.readAsDataURL(file);
+      fileReader.onload = () => {
+        resolve(fileReader.result);
+      };
+      fileReader.onerror = (error) => {
+        reject(error);
+      };
+    });
+  }
+  function compressFun(image) {
+    return new Promise((resolve, reject) => {
+      const size = image.size / 1024;
+      let qly = 1000 / size;
+      if (qly > 1) qly = 1;
+      new Compressor(image, {
+        quality: qly,
+        success: (compressedResult) => {
+          resolve(compressedResult);
+        },
+      });
+    });
+  }
   const handlePost = async () => {
     const formData = new FormData();
     formData.append("userId", _id);
     formData.append("description", post);
     if (image) {
-      formData.append("picture", image);
-      formData.append("picturePath", image.name);
+      let compressedImg = await compressFun(image);
+      const base64String = await convertToBase64(compressedImg);
+      formData.append("base64String", base64String);
     }
     setIsSubmitting(true);
     const response = await fetch(`${process.env.REACT_APP_API_KEY}/posts`, {
@@ -57,7 +85,6 @@ const MyPostWidget = ({ picturePath }) => {
       return;
     }
     const posts = await response.json();
-    console.log(posts);
     setIsSubmitting(false);
     dispatch(setPosts({ posts }));
     setImage(null);
@@ -67,7 +94,7 @@ const MyPostWidget = ({ picturePath }) => {
   return (
     <WidgetWrapper>
       <FlexBetween gap="1rem">
-        <UserImage image={picturePath} />
+        <UserImage image={userImage} />
         <InputBase
           placeholder="Add a post..."
           onChange={(e) => setPost(e.target.value)}

@@ -16,12 +16,13 @@ import {
   PURGE,
   REGISTER,
 } from "redux-persist";
-import storage from "redux-persist/lib/storage";
+// import storage from "redux-persist/lib/storage";
+import localforage from "localforage";
 import { PersistGate } from "redux-persist/integration/react";
 
 const persistConfig = {
   key: "root",
-  storage,
+  storage: localforage,
   version: 1,
 };
 const persistedReducer = persistReducer(persistConfig, authReducer);

@@ -10,7 +10,7 @@ import { setUserFriends } from "../state";
 import FlexBetween from "./flexBetween";
 import UserImage from "./UserImage";
 
-const Friend = ({ friendId, name, subtitle, userPicturePath, isProfile }) => {
+const Friend = ({ friendId, name, subtitle, image, isProfile }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { _id } = useSelector((state) => state.user);
@@ -22,7 +22,6 @@ const Friend = ({ friendId, name, subtitle, userPicturePath, isProfile }) => {
   const main = palette.neutral.main;
   const medium = palette.neutral.medium;
 
-  // console.log(friends);
   const isFriend = friends.find((friend) => friend._id === friendId);
 
   const patchFriend = async () => {
@@ -43,7 +42,7 @@ const Friend = ({ friendId, name, subtitle, userPicturePath, isProfile }) => {
   return (
     <FlexBetween>
       <FlexBetween gap="1rem">
-        <UserImage image={userPicturePath} size="55px" />
+        <UserImage image={image} size="55px" />
         <Box
           onClick={() => {
             navigate(`/profile/${friendId}`);

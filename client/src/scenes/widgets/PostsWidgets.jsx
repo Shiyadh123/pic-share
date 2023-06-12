@@ -69,6 +69,7 @@ const PostsWidget = ({ userId, isProfile = false }) => {
             comments,
             image,
             userImage,
+            createdAt,
           }) => (
             <PostWidget
               key={_id}
@@ -82,6 +83,7 @@ const PostsWidget = ({ userId, isProfile = false }) => {
               comments={comments}
               image={image}
               userImage={userImage}
+              createdAt={createdAt}
             />
           )
         )

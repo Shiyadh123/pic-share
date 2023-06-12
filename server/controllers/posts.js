@@ -3,7 +3,6 @@ import User from "../models/user.js";
 
 // create
 export const createPost = async (req, res) => {
-  console.log("beg");
   try {
     const { userId, description, base64String } = req.body;
     const user = await User.findById(userId);
@@ -19,7 +18,6 @@ export const createPost = async (req, res) => {
       userImage: user.image,
     });
     await newPost.save();
-    console.log("end");
     const posts = await Post.find();
     res.status(201).json(posts);
   } catch (error) {

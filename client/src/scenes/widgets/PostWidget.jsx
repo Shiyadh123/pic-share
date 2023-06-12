@@ -11,6 +11,7 @@ import Friend from "../../components/Friend";
 import WidgetWrapper from "../../components/WidgetWrapper";
 import { useDispatch, useSelector } from "react-redux";
 import { setPostAfterDelete, setPostAfterLike } from "../../state";
+import { LazyLoadImage } from "react-lazy-load-image-component";
 
 const PostWidget = ({
   postId,
@@ -77,7 +78,7 @@ const PostWidget = ({
         {description}
       </Typography>
       {image && (
-        <img
+        <LazyLoadImage
           width="100%"
           height="auto"
           alt="post"

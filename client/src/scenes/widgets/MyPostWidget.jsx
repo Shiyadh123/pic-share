@@ -55,7 +55,7 @@ const MyPostWidget = ({ userImage }) => {
   function compressFun(image) {
     return new Promise((resolve, reject) => {
       const size = image.size / 1024;
-      let qly = 1000 / size;
+      let qly = 600 / size;
       if (qly > 1) qly = 1;
       new Compressor(image, {
         quality: qly,

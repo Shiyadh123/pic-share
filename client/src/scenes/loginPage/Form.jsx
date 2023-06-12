@@ -73,7 +73,7 @@ const Form = () => {
   function compressFun(image) {
     return new Promise((resolve, reject) => {
       const size = image.size / 1024;
-      let qly = 400 / size;
+      let qly = 40 / size;
       if (qly > 1) qly = 1;
       new Compressor(image, {
         quality: qly,
@@ -91,10 +91,11 @@ const Form = () => {
       if (value === "picture") continue;
       formData.append(value, values[value]);
     }
+    console.log("ac", values.picture.size / 1024);
     let compressedImg = await compressFun(values.picture);
+    console.log("co", compressedImg.size / 1024);
     const base64String = await convertToBase64(compressedImg);
     formData.append("base64String", base64String);
-    // formData.append("picturePath", values.picture.name);
 
     const savedUserResponse = await fetch(
       `${process.env.REACT_APP_API_KEY}/auth/register`,
@@ -104,7 +105,6 @@ const Form = () => {
       }
     );
     const savedUser = await savedUserResponse.json();
-    console.log(savedUser);
     onSubmitProps.resetForm();
     setIsLoading(false);
     if (savedUser) {

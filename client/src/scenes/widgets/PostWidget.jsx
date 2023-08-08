@@ -2,9 +2,9 @@ import {
   ChatBubbleOutlineOutlined,
   FavoriteBorderOutlined,
   FavoriteOutlined,
-  ShareOutlined,
   DeleteOutlineOutlined,
 } from "@mui/icons-material";
+import ChatIcon from "@mui/icons-material/Chat";
 import {
   Box,
   Divider,
@@ -169,7 +169,11 @@ const PostWidget = ({
 
           <FlexBetween gap="0.2rem">
             <IconButton onClick={toggleComments}>
-              <ChatBubbleOutlineOutlined />
+              {isComments ? (
+                <ChatIcon sx={{ color: primary }}></ChatIcon>
+              ) : (
+                <ChatBubbleOutlineOutlined />
+              )}
             </IconButton>
             <Typography>{comments ? comments.length : 0}</Typography>
           </FlexBetween>
@@ -215,7 +219,7 @@ const PostWidget = ({
                 variant="standard"
               />
               <Button
-                style={{ marginTop: "10px" }}
+                style={{ marginTop: "10px", borderRadius: "30px" }}
                 type="submit"
                 variant="outlined"
                 color="primary"

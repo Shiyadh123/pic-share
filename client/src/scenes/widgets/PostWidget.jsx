@@ -72,6 +72,9 @@ const PostWidget = ({
   const dispatch = useDispatch();
   const token = useSelector((state) => state.token);
   const loggedInUserId = useSelector((state) => state.user._id);
+  const loggedInUserName = useSelector(
+    (state) => state.user.firstName + state.user.lastName
+  );
   const isLiked = Boolean(likes ? likes[loggedInUserId] : false);
   const likeCount = likes ? Object.keys(likes).length : 0;
   const isNonMobileScreens = useMediaQuery("(min-width:1000px)");
@@ -110,7 +113,10 @@ const PostWidget = ({
           Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ comment: comment.trim() }),
+        body: JSON.stringify({
+          comment: comment.trim(),
+          user: loggedInUserName,
+        }),
       }
     );
     setComment("");
@@ -198,8 +204,20 @@ const PostWidget = ({
               comments.map((comment, i) => (
                 <Box key={`${name}-${i}`}>
                   <Divider />
-                  <Typography sx={{ color: main, m: "0.5rem 0", pl: "1rem" }}>
-                    {comment}
+                  <Typography
+                    sx={{
+                      color: main,
+                      m: "0.5rem 0 0 0",
+                      pl: "0.4rem",
+                      fontWeight: "medium",
+                    }}
+                  >
+                    {comment.user}
+                  </Typography>
+                  <Typography
+                    sx={{ color: main, m: "0.1rem 0 0.5rem 1rem", pl: "1rem" }}
+                  >
+                    {comment.comment}
                   </Typography>
                 </Box>
               ))}

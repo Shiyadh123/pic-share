@@ -205,6 +205,7 @@ const PostWidget = ({
                 <Box key={`${name}-${i}`}>
                   <Divider />
                   <Typography
+                    display="inline"
                     sx={{
                       color: main,
                       m: "0.5rem 0 0 0",
@@ -213,7 +214,12 @@ const PostWidget = ({
                     }}
                     fontSize="16px"
                   >
-                    {comment.user}
+                    {comment.user} {" . "}
+                    {
+                      <Typography display="inline" fontSize="11px">
+                        {timeSince(comment.date)} ago
+                      </Typography>
+                    }
                   </Typography>
                   <Typography
                     fontSize="16px"

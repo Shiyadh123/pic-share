@@ -21,7 +21,9 @@ import {
   Close,
   Home,
   AccountBox,
+  // PhotoFilterIcon,
 } from "@mui/icons-material";
+import FlipCameraAndroidIcon from "@mui/icons-material/FlipCameraAndroid";
 import { useDispatch, useSelector } from "react-redux";
 import {
   setMode,

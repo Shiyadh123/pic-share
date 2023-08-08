@@ -7,9 +7,6 @@ import multer from "multer";
 import helmet from "helmet";
 import path from "path"; //node native
 import { fileURLToPath } from "url"; //to config directories
-// import User from "./models/user.js";
-// import Post from "./models/post.js";
-// import { users, posts } from "./data/index.js";
 
 import authRoutes from "./routes/auth.js";
 import userRoutes from "./routes/users.js";

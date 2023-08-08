@@ -5,13 +5,27 @@ import {
   ShareOutlined,
   DeleteOutlineOutlined,
 } from "@mui/icons-material";
-import { IconButton, Typography, useTheme } from "@mui/material";
+import {
+  Box,
+  Divider,
+  IconButton,
+  Typography,
+  useTheme,
+  TextField,
+  Button,
+  useMediaQuery,
+} from "@mui/material";
 import FlexBetween from "../../components/flexBetween";
 import Friend from "../../components/Friend";
 import WidgetWrapper from "../../components/WidgetWrapper";
 import { useDispatch, useSelector } from "react-redux";
-import { setPostAfterDelete, setPostAfterLike } from "../../state";
+import {
+  setPostAfterDelete,
+  setPostAfterLike,
+  setPostAfterComment,
+} from "../../state";
 import { LazyLoadImage } from "react-lazy-load-image-component";
+import { useState } from "react";
 
 function timeSince(date) {
   var seconds = Math.floor((new Date() - date) / 1000);
@@ -51,12 +65,16 @@ const PostWidget = ({
   image,
   userImage,
   createdAt,
+  comments,
 }) => {
+  const [isComments, setIsComments] = useState(false);
+  const [comment, setComment] = useState("");
   const dispatch = useDispatch();
   const token = useSelector((state) => state.token);
   const loggedInUserId = useSelector((state) => state.user._id);
   const isLiked = Boolean(likes ? likes[loggedInUserId] : false);
   const likeCount = likes ? Object.keys(likes).length : 0;
+  const isNonMobileScreens = useMediaQuery("(min-width:1000px)");
 
   const { palette } = useTheme();
   const main = palette.neutral.main;
@@ -76,6 +94,28 @@ const PostWidget = ({
     );
     const updatedPost = await response.json();
     dispatch(setPostAfterLike({ post: updatedPost }));
+  };
+
+  const toggleComments = () => {
+    setIsComments((prev) => !prev);
+  };
+
+  const handleCommentSubmit = async (e) => {
+    e.preventDefault();
+    const response = await fetch(
+      `${process.env.REACT_APP_API_KEY}/posts/${postId}/comment`,
+      {
+        method: "PATCH",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ comment: comment.trim() }),
+      }
+    );
+    setComment("");
+    const updatedPost = await response.json();
+    dispatch(setPostAfterComment({ post: updatedPost }));
   };
 
   const handleDeletePost = async () => {
@@ -128,10 +168,10 @@ const PostWidget = ({
           </FlexBetween>
 
           <FlexBetween gap="0.2rem">
-            <IconButton>
+            <IconButton onClick={toggleComments}>
               <ChatBubbleOutlineOutlined />
             </IconButton>
-            <Typography>{0}</Typography>
+            <Typography>{comments ? comments.length : 0}</Typography>
           </FlexBetween>
           {postUserId === loggedInUserId && (
             <FlexBetween gap="0.2rem">
@@ -147,6 +187,46 @@ const PostWidget = ({
           </Typography>
         </IconButton>
       </FlexBetween>
+      {isComments && (
+        <>
+          <Box mt="0.5rem">
+            {comments &&
+              comments.map((comment, i) => (
+                <Box key={`${name}-${i}`}>
+                  <Divider />
+                  <Typography sx={{ color: main, m: "0.5rem 0", pl: "1rem" }}>
+                    {comment}
+                  </Typography>
+                </Box>
+              ))}
+            <Divider />
+          </Box>
+          <Box
+            display="flex"
+            alignItems="center"
+            style={isNonMobileScreens ? { marginLeft: "60px" } : {}}
+          >
+            <form onSubmit={handleCommentSubmit}>
+              <TextField
+                label="Add a Comment"
+                rows={1}
+                value={comment}
+                onChange={(e) => setComment(e.target.value)}
+                variant="standard"
+              />
+              <Button
+                style={{ marginTop: "10px" }}
+                type="submit"
+                variant="outlined"
+                color="primary"
+                disabled={comment.trim() === ""}
+              >
+                Submit
+              </Button>
+            </form>
+          </Box>
+        </>
+      )}
     </WidgetWrapper>
   );
 };

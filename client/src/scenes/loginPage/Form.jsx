@@ -91,9 +91,7 @@ const Form = () => {
       if (value === "picture") continue;
       formData.append(value, values[value]);
     }
-    console.log("ac", values.picture.size / 1024);
     let compressedImg = await compressFun(values.picture);
-    console.log("co", compressedImg.size / 1024);
     const base64String = await convertToBase64(compressedImg);
     formData.append("base64String", base64String);
 

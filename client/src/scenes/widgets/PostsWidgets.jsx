@@ -66,7 +66,7 @@ const PostsWidget = ({ userId, isProfile = false }) => {
             description,
             location,
             likes,
-            comments,
+            comment,
             image,
             userImage,
             createdAt,
@@ -80,7 +80,7 @@ const PostsWidget = ({ userId, isProfile = false }) => {
               description={description}
               location={location}
               likes={likes}
-              comments={comments}
+              comments={comment}
               image={image}
               userImage={userImage}
               createdAt={createdAt}

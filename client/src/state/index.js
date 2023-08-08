@@ -54,6 +54,14 @@ export const authSlice = createSlice({
       state.posts = updatedPosts;
       state.filteredPosts = updatedPosts;
     },
+    setPostAfterComment: (state, action) => {
+      const updatedPosts = state.posts.map((post) => {
+        if (post._id === action.payload.post._id) return action.payload.post;
+        return post;
+      });
+      state.posts = updatedPosts;
+      state.filteredPosts = updatedPosts;
+    },
     setPostAfterDelete: (state, action) => {
       const updatedPosts = state.posts.filter((post) => {
         return post._id !== action.payload.deletedPostId._id;
@@ -74,5 +82,6 @@ export const {
   setPostAfterLike,
   setPosts,
   setfilteredPosts,
+  setPostAfterComment,
 } = authSlice.actions;
 export default authSlice.reducer;

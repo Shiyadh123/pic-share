@@ -211,10 +211,12 @@ const PostWidget = ({
                       pl: "0.4rem",
                       fontWeight: "medium",
                     }}
+                    fontSize="16px"
                   >
                     {comment.user}
                   </Typography>
                   <Typography
+                    fontSize="16px"
                     sx={{ color: main, m: "0.1rem 0 0.5rem 1rem", pl: "1rem" }}
                   >
                     {comment.comment}

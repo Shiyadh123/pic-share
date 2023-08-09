@@ -73,7 +73,7 @@ const PostWidget = ({
   const token = useSelector((state) => state.token);
   const loggedInUserId = useSelector((state) => state.user._id);
   const loggedInUserName = useSelector(
-    (state) => state.user.firstName + state.user.lastName
+    (state) => state.user.firstName + " " + state.user.lastName
   );
   const isLiked = Boolean(likes ? likes[loggedInUserId] : false);
   const likeCount = likes ? Object.keys(likes).length : 0;

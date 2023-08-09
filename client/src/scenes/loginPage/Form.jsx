@@ -203,7 +203,7 @@ const Form = () => {
                   sx={{ gridColumn: "span 4" }}
                 />
                 <TextField
-                  label="Interests(Eg:Photography)"
+                  label="Bio/Interests(Eg:Photography)"
                   onBlur={handleBlur}
                   onChange={handleChange}
                   value={values.interests}

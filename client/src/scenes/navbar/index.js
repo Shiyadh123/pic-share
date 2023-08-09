@@ -69,7 +69,7 @@ const Navbar = () => {
   };
 
   return (
-    <FlexBetween padding="0.5rem 6%" backgroundColor={alt}>
+    <FlexBetween padding="0.2rem 6%" backgroundColor={alt}>
       <FlexBetween gap="1.75rem">
         <Typography
           fontWeight="bold"
@@ -115,14 +115,14 @@ const Navbar = () => {
               <LightMode sx={{ color: dark, fontSize: "25px" }} />
             )}
           </IconButton>
-          <IconButton
+          {/* <IconButton
             component={Link}
             to="https://github.com/Shiyadh123/pic-share"
             target="_blank"
             rel="noopener noreferrer"
           >
             <Help sx={{ fontSize: "25px" }} />
-          </IconButton>
+          </IconButton> */}
           <FormControl variant="standard" value={fullName}>
             <Select
               value={fullName}

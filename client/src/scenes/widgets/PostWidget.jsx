@@ -238,7 +238,7 @@ const PostWidget = ({
           >
             <form onSubmit={handleCommentSubmit}>
               <TextField
-                label="Add a Comment"
+                label="Add a comment"
                 rows={1}
                 value={comment}
                 onChange={(e) => setComment(e.target.value)}

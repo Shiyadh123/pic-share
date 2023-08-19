@@ -7,6 +7,7 @@ import {
   Typography,
   useTheme,
 } from "@mui/material";
+import LockOpenIcon from "@mui/icons-material/LockOpen";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import { Formik } from "formik";
 import * as yup from "yup";
@@ -323,6 +324,23 @@ const Form = () => {
                 : "Already have an account? Login here."}
             </Typography>
           </Box>
+          <Button
+            disabled={isLoading}
+            fullWidth
+            sx={{
+              m: "2rem 0 0 0",
+              p: "1rem",
+              backgroundColor: "#4BB543",
+              color: palette.background.alt,
+              "&:hover": { color: palette.primary.main },
+            }}
+            onClick={() => {
+              navigate(`/home`);
+              navigate(0);
+            }}
+          >
+            <LockOpenIcon></LockOpenIcon> Enter without LogIn
+          </Button>
         </form>
       )}
     </Formik>

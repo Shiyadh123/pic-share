@@ -26,6 +26,7 @@ import {
 } from "../../state";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 function timeSince(date) {
   var seconds = Math.floor((new Date() - date) / 1000);
@@ -70,12 +71,19 @@ const PostWidget = ({
   const [isComments, setIsComments] = useState(false);
   const [comment, setComment] = useState("");
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const token = useSelector((state) => state.token);
-  const loggedInUserId = useSelector((state) => state.user._id);
-  const loggedInUserName = useSelector(
-    (state) => state.user.firstName + " " + state.user.lastName
-  );
-  const isLiked = Boolean(likes ? likes[loggedInUserId] : false);
+  const isAuth = Boolean(useSelector((state) => state.token));
+  const loggedInUser = useSelector((state) => state.user);
+  let loggedInUserId = null;
+  let loggedInUserName = null;
+  if (isAuth) {
+    loggedInUserId = loggedInUser._id;
+    loggedInUserName = loggedInUser.firstName + " " + loggedInUser.lastName;
+  }
+  const isLiked = isAuth
+    ? Boolean(likes ? likes[loggedInUserId] : false)
+    : false;
   const likeCount = likes ? Object.keys(likes).length : 0;
   const isNonMobileScreens = useMediaQuery("(min-width:1000px)");
 
@@ -84,6 +92,10 @@ const PostWidget = ({
   const primary = palette.primary.main;
 
   const patchLike = async () => {
+    if (!isAuth) {
+      navigate(`/`);
+      navigate(0);
+    }
     const response = await fetch(
       `${process.env.REACT_APP_API_KEY}/posts/${postId}/like`,
       {
@@ -104,6 +116,10 @@ const PostWidget = ({
   };
 
   const handleCommentSubmit = async (e) => {
+    if (!isAuth) {
+      navigate(`/`);
+      navigate(0);
+    }
     e.preventDefault();
     const response = await fetch(
       `${process.env.REACT_APP_API_KEY}/posts/${postId}/comment`,
@@ -125,6 +141,10 @@ const PostWidget = ({
   };
 
   const handleDeletePost = async () => {
+    if (!isAuth) {
+      navigate(`/`);
+      navigate(0);
+    }
     const response = await fetch(
       `${process.env.REACT_APP_API_KEY}/posts/${postId}`,
       {

@@ -42,6 +42,7 @@ const PostsWidget = ({ userId, isProfile = false }) => {
       getPosts();
     }
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  // console.log(posts);
 
   let revPosts = posts.slice().reverse();
 
@@ -52,7 +53,7 @@ const PostsWidget = ({ userId, isProfile = false }) => {
           {" "}
           <PostLoader></PostLoader> <PostLoader></PostLoader>
         </>
-      ) : posts.length === 0 ? (
+      ) : revPosts.length === 0 ? (
         <Typography variant="h5" ml="10px">
           No posts to show
         </Typography>

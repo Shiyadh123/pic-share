@@ -9,6 +9,7 @@ import {
   FormControl,
   useTheme,
   useMediaQuery,
+  Button,
 } from "@mui/material";
 import {
   Search,
@@ -39,6 +40,7 @@ const Navbar = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const user = useSelector((state) => state.user);
+  const isAuth = Boolean(useSelector((state) => state.token));
   const isNonMobileScreens = useMediaQuery("(min-width: 1000px)");
 
   const theme = useTheme();
@@ -124,28 +126,41 @@ const Navbar = () => {
             <Help sx={{ fontSize: "25px" }} />
           </IconButton> */}
           <FormControl variant="standard" value={fullName}>
-            <Select
-              value={fullName}
-              sx={{
-                backgroundColor: neutralLight,
-                width: "150px",
-                borderRadius: "0.25rem",
-                p: "0.25rem 1rem",
-                "& .MuiSvgIcon-root": {
-                  pr: "0.25rem",
-                  width: "3rem",
-                },
-                "& .MuiSelect-select:focus": {
+            {isAuth ? (
+              <Select
+                value={fullName}
+                sx={{
                   backgroundColor: neutralLight,
-                },
-              }}
-              input={<InputBase />}
-            >
-              <MenuItem value={fullName}>
-                <Typography>{fullName}</Typography>
-              </MenuItem>
-              <MenuItem onClick={() => dispatch(setLogout())}>Log Out</MenuItem>
-            </Select>
+                  width: "150px",
+                  borderRadius: "0.25rem",
+                  p: "0.25rem 1rem",
+                  "& .MuiSvgIcon-root": {
+                    pr: "0.25rem",
+                    width: "3rem",
+                  },
+                  "& .MuiSelect-select:focus": {
+                    backgroundColor: neutralLight,
+                  },
+                }}
+                input={<InputBase />}
+              >
+                <MenuItem value={fullName}>
+                  <Typography>{fullName}</Typography>
+                </MenuItem>
+                <MenuItem onClick={() => dispatch(setLogout())}>
+                  Log Out
+                </MenuItem>
+              </Select>
+            ) : (
+              <Button
+                onClick={() => {
+                  navigate(`/`);
+                  navigate(0);
+                }}
+              >
+                Log In
+              </Button>
+            )}
           </FormControl>
         </FlexBetween>
       ) : (
@@ -185,15 +200,17 @@ const Navbar = () => {
             alignItems="center"
             gap="3rem"
           >
-            <IconButton
-              sx={{ fontSize: "25px" }}
-              onClick={() => {
-                navigate(`/profile/${user._id}`);
-                navigate(0);
-              }}
-            >
-              <AccountBox sx={{ fontSize: "25px" }}></AccountBox>
-            </IconButton>
+            {isAuth && (
+              <IconButton
+                sx={{ fontSize: "25px" }}
+                onClick={() => {
+                  navigate(`/profile/${user._id}`);
+                  navigate(0);
+                }}
+              >
+                <AccountBox sx={{ fontSize: "25px" }}></AccountBox>
+              </IconButton>
+            )}
             <IconButton
               onClick={() => dispatch(setMode())}
               sx={{ fontSize: "25px" }}
@@ -213,30 +230,41 @@ const Navbar = () => {
               <Help sx={{ fontSize: "25px" }} />
             </IconButton>
             <FormControl variant="standard" value={fullName}>
-              <Select
-                value={fullName}
-                sx={{
-                  backgroundColor: neutralLight,
-                  width: "150px",
-                  borderRadius: "0.25rem",
-                  p: "0.25rem 1rem",
-                  "& .MuiSvgIcon-root": {
-                    pr: "0.25rem",
-                    width: "3rem",
-                  },
-                  "& .MuiSelect-select:focus": {
+              {isAuth ? (
+                <Select
+                  value={fullName}
+                  sx={{
                     backgroundColor: neutralLight,
-                  },
-                }}
-                input={<InputBase />}
-              >
-                <MenuItem value={fullName}>
-                  <Typography>{fullName}</Typography>
-                </MenuItem>
-                <MenuItem onClick={() => dispatch(setLogout())}>
-                  Log Out
-                </MenuItem>
-              </Select>
+                    width: "150px",
+                    borderRadius: "0.25rem",
+                    p: "0.25rem 1rem",
+                    "& .MuiSvgIcon-root": {
+                      pr: "0.25rem",
+                      width: "3rem",
+                    },
+                    "& .MuiSelect-select:focus": {
+                      backgroundColor: neutralLight,
+                    },
+                  }}
+                  input={<InputBase />}
+                >
+                  <MenuItem value={fullName}>
+                    <Typography>{fullName}</Typography>
+                  </MenuItem>
+                  <MenuItem onClick={() => dispatch(setLogout())}>
+                    Log Out
+                  </MenuItem>
+                </Select>
+              ) : (
+                <Button
+                  onClick={() => {
+                    navigate(`/`);
+                    navigate(0);
+                  }}
+                >
+                  Log In
+                </Button>
+              )}
             </FormControl>
           </FlexBetween>
         </Box>

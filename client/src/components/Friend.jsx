@@ -13,9 +13,15 @@ import UserImage from "./UserImage";
 const Friend = ({ friendId, name, subtitle, image, isProfile }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { _id } = useSelector((state) => state.user);
   const token = useSelector((state) => state.token);
-  const friends = useSelector((state) => state.user.friends);
+  const isAuth = Boolean(useSelector((state) => state.token));
+  const user = useSelector((state) => state.user);
+  let friends = [];
+  let _id = null;
+  if (isAuth) {
+    friends = user.friends;
+    _id = user._id;
+  }
   const { palette } = useTheme();
   const primaryLight = palette.primary.light;
   const primaryDark = palette.primary.dark;
@@ -25,6 +31,10 @@ const Friend = ({ friendId, name, subtitle, image, isProfile }) => {
   const isFriend = friends.find((friend) => friend._id === friendId);
 
   const patchFriend = async () => {
+    if (!isAuth) {
+      navigate(`/`);
+      navigate(0);
+    }
     const response = await fetch(
       `${process.env.REACT_APP_API_KEY}/users/${_id}/${friendId}`,
       {
@@ -45,7 +55,11 @@ const Friend = ({ friendId, name, subtitle, image, isProfile }) => {
         <UserImage image={image} size="55px" />
         <Box
           onClick={() => {
-            navigate(`/profile/${friendId}`);
+            if (!isAuth) {
+              navigate(`/`);
+            } else {
+              navigate(`/profile/${friendId}`);
+            }
             navigate(0);
           }}
         >

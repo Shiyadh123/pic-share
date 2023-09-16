@@ -55,7 +55,7 @@ app.use("/posts", postRoutes);
 const fun = async () => {
   console.log("running...");
 };
-setInterval(fun, 20000);
+setInterval(fun, Number(process.env.LIVE_TIME));
 
 // Mongoose setup
 const PORT = process.env.PORT || 6001;

@@ -52,6 +52,11 @@ app.use("/auth", authRoutes);
 app.use("/users", userRoutes);
 app.use("/posts", postRoutes);
 
+const fun = async () => {
+  console.log("running...");
+};
+setInterval(fun, 20000);
+
 // Mongoose setup
 const PORT = process.env.PORT || 6001;
 mongoose

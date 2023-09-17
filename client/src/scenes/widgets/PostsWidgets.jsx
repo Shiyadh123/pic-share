@@ -50,7 +50,25 @@ const PostsWidget = ({ userId, isProfile = false }) => {
     <>
       {isLoading ? (
         <>
-          {" "}
+          {!isProfile && (
+            <div
+              style={{
+                border: "1px solid red",
+                borderRadius: "0.65rem",
+                padding: "7px",
+                margin: "2px",
+              }}
+            >
+              <p
+                style={{
+                  margin: "0px",
+                }}
+              >
+                Please bear with us, Our backend service requires a short
+                spin-up time of few seconds.
+              </p>
+            </div>
+          )}
           <PostLoader></PostLoader> <PostLoader></PostLoader>
         </>
       ) : revPosts.length === 0 ? (
